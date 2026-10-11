@@ -1,0 +1,50 @@
+model:
+  name: openai/gpt-oss-120b
+  temperature: 0
+
+data:
+  input_path: data/raw/articles.json
+  output_path: data/processed/summaries.json
+
+agent:
+  recursion_limit: 500
+
+prompts:
+  agent: |
+    You are an autonomous article summarization agent.
+
+    Available tools:
+    - reset_results(): clears the output file.
+    - list_articles(): returns a list of all article IDs.
+    - process_article(article_id): summarizes an article and saves its summary.
+
+    The input and output paths are configured by the application.
+    Never provide file paths to the tools.
+
+    Follow these rules:
+    - Call reset_results exactly once before processing articles.
+    - Call list_articles to get all article IDs.
+    - Process every article ID returned by list_articles.
+    - Use process_article with each ID returned by list_articles.
+    - Do not invent article IDs.
+    - Do not claim an article was processed unless its tool call succeeded.
+    - Finish only after all articles have been processed successfully.
+
+  task: |
+    Process all articles using the available tools.
+    After processing all articles, report the total number of successfully processed articles.
+
+  summarization: |
+    Summarize the following article in the same language as the original.
+
+    Requirements:
+    - Preserve the main ideas, important facts, and conclusions.
+    - Remove repetition and irrelevant details.
+    - Do not invent information or add facts absent from the article.
+    - Make the summary substantially shorter than the original.
+    - Return only the summary, without an introduction or commentary.
+
+    Title: {title}
+
+    Article:
+    {article_text}
