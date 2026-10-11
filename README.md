@@ -14,7 +14,7 @@
 - `scripts/main.py` — точка входа и запуск агента.
 - `scripts/agent_graph.py` — создание агента, подключение MCP-инструментов и построение графа LangGraph.
 - `scripts/mcp_server.py` — MCP-сервер, реализация инструментов и вызовы LLM.
-- `scripts/view_results.py` — просмотра сохранённых результатов.
+- `scripts/view_results.py` — просмотр сохранённых результатов.
 - `requirements.txt` — зависимости проекта.
 
 ## 3. Архитектура и инструменты
